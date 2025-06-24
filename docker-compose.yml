@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: blog_database_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: userpassword
+      POSTGRES_DB: blog_database_postgres
+    ports:
+      - "5431;:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
