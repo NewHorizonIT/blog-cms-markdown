@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/providers/AuthProvider";
+import { Header } from "@/components/shared/Header";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const manrope = Manrope({
   variable: "--font-geist-mono",
@@ -19,9 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="mdl-js">
+    <html lang="en" className="mdl-js" suppressHydrationWarning>
       <body className={`${manrope.variable}`}>
-        <AuthProvider>{children}</AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>{children}</AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
