@@ -14,3 +14,5 @@ export const listMenu: IMenuItem[] = [
     href: "/about",
   },
 ];
+
+export const listAdminDashboard = [];

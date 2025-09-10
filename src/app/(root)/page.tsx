@@ -1,55 +1,55 @@
 "use client";
 
 import { BlogPostCard } from "@/components/shared/post/BlogPostCard";
-import SideBar from "@/components/shared/SideBar";
+import SearchBox from "@/components/shared/SearchBox";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { blogPosts } from "@/mock/posts.data";
-import { Search } from "lucide-react";
+import { usePosts } from "@/hooks/usePost";
+import { Post } from "@/types";
 import { useState } from "react";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
+  const { posts, isLoading, isError } = usePosts({ limit: 10, page: 1 });
+  console.log(posts?.data.data);
+
   // Get all unique tags
-  const allTags = Array.from(new Set(blogPosts.flatMap((post) => post.tags)));
+  // const allTags = Array.from(
+  //   new Set(posts?.data.flatMap((post: Post) => post.tags))
+  // );
 
   // Filter posts based on search and tag
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesTag = !selectedTag || post.tags.includes(selectedTag);
-    return matchesSearch && matchesTag;
-  });
+  // const filteredPosts = blogPosts.filter((post) => {
+  //   const matchesSearch =
+  //     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+  //   const matchesTag = !selectedTag || post.tags.includes(selectedTag);
+  //   return matchesSearch && matchesTag;
+  // });
+
+  if (isLoading) return <p>Đang tải...</p>;
+  if (isError) return <p>Lỗi khi tải dữ liệu.</p>;
   return (
     <div className="container">
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="">
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-8">
             {/* Hero Section */}
             <div className="text-center space-y-4 py-12">
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-                Welcome to Our Blog
+                Chào bạn đến với blog của NewHorizon
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Discover the latest insights, tutorials, and best practices in
-                web development, design, and technology.
+                Tôi chủ yếu viết blof về téchtack, Tutorial, best practtice.
               </p>
             </div>
 
             {/* Search and Filters */}
             <div className="space-y-4">
               <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Tìm kiếm bài viết..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
+                <SearchBox />
               </div>
 
               {/* Tag Filter */}
@@ -61,7 +61,7 @@ export default function Home() {
                 >
                   Tất cả
                 </Button>
-                {allTags.map((tag) => (
+                {/* {allTags.map((tag) => (
                   <Button
                     key={tag}
                     variant={selectedTag === tag ? "default" : "outline"}
@@ -70,18 +70,14 @@ export default function Home() {
                   >
                     {tag}
                   </Button>
-                ))}
+                ))} */}
               </div>
             </div>
 
             {/* Blog Posts Grid */}
-            <div className="grid gap-8">
-              {filteredPosts.map((post, index) => (
-                <BlogPostCard
-                  key={post.id}
-                  post={post}
-                  featured={index === 0}
-                />
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {posts?.data.data.map((post: Post) => (
+                <BlogPostCard key={post.id} post={post} />
               ))}
             </div>
 
@@ -90,11 +86,6 @@ export default function Home() {
                 <p className="text-muted-foreground">Không tìm thấy bài viết nào.</p>
               </div>
             )} */}
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <SideBar posts={blogPosts} />
           </div>
         </div>
       </main>

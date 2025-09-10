@@ -12,3 +12,8 @@ export interface Post {
   author: string;
   coverImage: string;
 }
+
+export interface OptionSelect {
+  label: string;
+  value: string;
+}

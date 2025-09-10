@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/providers/AuthProvider";
-import { Header } from "@/components/shared/Header";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
-const manrope = Manrope({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -21,8 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="mdl-js" suppressHydrationWarning>
-      <body className={`${manrope.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} mdl-js`}
+      suppressHydrationWarning
+    >
+      <body className="font-inter">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

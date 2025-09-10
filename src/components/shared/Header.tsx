@@ -30,7 +30,9 @@ import { ModeToggle } from "./ModeToggle";
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession({
+    required: false,
+  });
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -40,7 +42,7 @@ export function Header() {
           <Link href="/blog" className="flex items-center space-x-2">
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">
-                B
+                N
               </span>
             </div>
             <span className="font-bold text-xl">Blog</span>
@@ -61,15 +63,6 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center space-x-4">
-            {/* Search */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="hidden sm:flex"
-            >
-              <Search className="h-4 w-4" />
-            </Button>
             {/* Mode Toggle */}
             <ModeToggle />
             {/* Account Status */}
@@ -79,7 +72,12 @@ export function Header() {
                   <DropdownMenuTrigger asChild>
                     <Button className="p-0 rounded-full overflow-hidden">
                       <Avatar className="h-full">
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage
+                          src={
+                            session.user.image ||
+                            "https://github.com/shadcn.png"
+                          }
+                        />
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                     </Button>
@@ -99,10 +97,10 @@ export function Header() {
               ) : (
                 <div className="flex gap-2">
                   <Button className="min-w-[100px]">
-                    <Link href={"/sign-in"}>Đăng kí</Link>
+                    <Link href={"/sign-up"}>Đăng kí</Link>
                   </Button>
                   <Button className="min-w-[100px]">
-                    <Link href={"/sign-up"}>Đăng nhập</Link>
+                    <Link href={"/sign-in"}>Đăng nhập</Link>
                   </Button>
                 </div>
               )}
