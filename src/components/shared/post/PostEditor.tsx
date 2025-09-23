@@ -88,7 +88,7 @@ export function PostEditor() {
         excerpt: "",
         status: EStatucArticle.DRAFT,
       });
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       toast.error("Có lỗi xảy ra khi tạo bài viết.");
     }

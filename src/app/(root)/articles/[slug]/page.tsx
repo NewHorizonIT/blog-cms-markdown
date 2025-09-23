@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Slice, User } from "lucide-react";
+import { ArrowLeft, Calendar, User } from "lucide-react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.css";
 import React from "react";
 import { usePostDetail } from "@/hooks/usePost";
+import Image from "next/image";
 
 export default function BlogPostPage({
   params,
@@ -17,7 +18,7 @@ export default function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = React.use(params);
-  const { post, isLoading, isError } = usePostDetail(slug);
+  const { post } = usePostDetail(slug);
   const data = post?.data.data;
 
   return (
@@ -39,7 +40,7 @@ export default function BlogPostPage({
             {/* Cover Image */}
             {data && (
               <div className="mb-8">
-                <img
+                <Image
                   src={data.coverImage || "/placeholder.svg"}
                   alt={data.title}
                   className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
+import { UploadApiResponse } from "cloudinary";
 
 export async function POST(req: Request) {
   try {
@@ -17,20 +18,20 @@ export async function POST(req: Request) {
       if (existing) {
         return NextResponse.json({ url: existing.secure_url });
       }
-    } catch (err: any) {
-      console.log("Upload error");
+    } catch (err) {
+      console.error("Upload error", err);
     }
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const result = await new Promise<any>((resolve, reject) => {
+    const result = await new Promise<UploadApiResponse>((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
           { folder: "nextjs-posts", resource_type: "image" },
           (err, result) => {
             if (err) reject(err);
-            else resolve(result);
+            else resolve(result as UploadApiResponse);
           }
         )
         .end(buffer);
@@ -40,11 +41,8 @@ export async function POST(req: Request) {
       { url: result.secure_url, success: true },
       { status: 201 }
     );
-  } catch (err: any) {
-    console.log("Upload file error: ", err.message);
-    return NextResponse.json(
-      { error: err.message, success: false },
-      { status: 500 }
-    );
+  } catch (err) {
+    console.log("Upload file error: ", err);
+    return NextResponse.json({ error: err, success: false }, { status: 500 });
   }
 }

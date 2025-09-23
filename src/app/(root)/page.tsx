@@ -6,7 +6,7 @@ import SearchBox from "@/components/shared/SearchBox";
 import { Button } from "@/components/ui/button";
 import { usePosts, useSearchPost } from "@/hooks/usePost";
 import { Post } from "@/types";
-import React, { InputHTMLAttributes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Home() {
   const [keySearch, setKeySearch] = useState("");
@@ -20,10 +20,11 @@ export default function Home() {
     }
   }, [posts]);
 
-  const { posts: postSearch, isError: errorSearch } = useSearchPost(keySearch);
+  const { posts: postSearch } = useSearchPost(keySearch);
   const handleSearch = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       setKeySearch(keySearch);
+      setPostsData(postSearch?.data);
     }
   };
 

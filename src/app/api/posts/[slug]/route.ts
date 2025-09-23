@@ -1,4 +1,3 @@
-import { Post } from "@/generated/prisma";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -6,11 +5,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Get post by slug
 export async function GET(
-  request: Request,
-  context: { params: { slug: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const { slug } = await context.params;
+    const { slug } = await params;
     const post = await prisma.post.findUnique({
       where: { slug: slug },
       include: {
@@ -40,12 +39,13 @@ export async function GET(
 // Update post by slug
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     const data = await req.json();
+    const { slug } = await params;
     const updated = await prisma.post.update({
-      where: { slug: params.slug },
+      where: { slug: slug },
       data: data,
     });
 
@@ -63,15 +63,16 @@ export async function PATCH(
 // Delete post by slug
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const post = await prisma.post.findUnique({ where: { slug: params.slug } });
+    const post = await prisma.post.findUnique({ where: { slug: slug } });
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
@@ -80,7 +81,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    await prisma.post.delete({ where: { slug: params.slug } });
+    await prisma.post.delete({ where: { slug: slug } });
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

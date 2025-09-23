@@ -2,7 +2,7 @@ import axiosInstance from "@/lib/axios";
 import { Post } from "@/types";
 
 export const postService = {
-  getAll: (params?: Record<string, any>) =>
+  getAll: (params?: Record<string, string | number>) =>
     axiosInstance.get("/posts", { params }),
   getBySlug: (slug: string) => axiosInstance.get(`/posts/${slug}`),
   searchByKey: (keySearch: string) =>
