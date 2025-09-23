@@ -34,6 +34,10 @@ export function Header() {
     required: false,
   });
 
+  const handleClose = () => {
+    setIsSearchOpen((prev) => !prev);
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
@@ -154,6 +158,7 @@ export function Header() {
                 className="pl-10"
                 autoFocus
               />
+              <Button onClick={() => handleClose()}>X</Button>
             </div>
           </div>
         )}

@@ -4,7 +4,7 @@ import queryString from "query-string";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-export const usePosts = (params?: Record<string, any>) => {
+export const usePosts = (params?: Record<string, string | number>) => {
   const qs = params ? `?${queryString.stringify(params)}` : "";
 
   const { data, isLoading, error, mutate } = useSWR(

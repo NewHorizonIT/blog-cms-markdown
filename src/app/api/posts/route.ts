@@ -33,8 +33,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(post, { status: 201 });
-  } catch (err: any) {
-    console.error("POST /api/posts error:", err.message);
+  } catch (err) {
+    console.error("POST /api/posts error:", err);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }
@@ -73,6 +73,7 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ success: false }, { status: 400 });
   }
 }

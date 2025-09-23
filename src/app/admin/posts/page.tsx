@@ -1,16 +1,13 @@
 "use client";
 import { PostList } from "@/components/shared/post/PostList";
-import SearchBox from "@/components/shared/SearchBox";
 import { Button } from "@/components/ui/button";
-import { EStatucArticle, PostFilterStatus } from "@/constant/enum";
 import { usePosts } from "@/hooks/usePost";
-import { Post } from "@/types";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 
 const AdminPostPage = () => {
-  const { posts, isLoading, isError } = usePosts();
+  const { posts } = usePosts();
   const data = posts?.data.data;
 
   return (

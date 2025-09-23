@@ -8,10 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Post } from "@/types";
+import Image from "next/image";
 
 interface BlogPostCardProps {
   post: Post;
@@ -23,7 +22,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
       <div className="grid grid-cols-1">
         {/* Image */}
         <div className="relative overflow-hidden ">
-          <img
+          <Image
             src={post.coverImage || "/placeholder.svg"}
             alt={post.title}
             className="w-full object-cover transition-transform duration-300 group-hover:scale-105

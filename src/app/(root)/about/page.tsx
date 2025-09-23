@@ -1,8 +1,8 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Mail, MapPin } from "lucide-react";
+import Image from "next/image";
 
 export default function AboutPage() {
   const personalInfo = {
@@ -32,7 +32,7 @@ export default function AboutPage() {
         {/* Hero Section */}
         <section className="grid md:grid-cols-2 items-center gap-8">
           <div className="mx-auto md:mx-0 rounded overflow-hidden flex justify-center">
-            <img
+            <Image
               src={personalInfo.avatar}
               alt={personalInfo.name}
               className="w-full h-full object-cover"

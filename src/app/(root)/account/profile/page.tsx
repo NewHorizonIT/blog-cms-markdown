@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const [avatar, setAvatar] = useState(null);
@@ -25,8 +26,14 @@ export default function ProfilePage() {
   };
 
   // Handle avatar upload
-  const handleAvatarUpload = async (event: any) => {
-    const file = event.target.files[0];
+  const handleAvatarUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+    const file = files[0];
     const formData = new FormData();
     formData.append("avatar", file);
 
@@ -60,7 +67,7 @@ export default function ProfilePage() {
           <CardContent>
             <div className="text-center mb-6">
               <div className="w-32 h-32 mx-auto rounded-full overflow-hidden">
-                <img
+                <Image
                   src={avatar || userInfo.avatar || "/placeholder.svg"}
                   alt="Avatar"
                   className="w-full h-full object-cover"

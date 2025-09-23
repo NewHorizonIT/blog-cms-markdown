@@ -1,6 +1,6 @@
 "use client";
 
-import { PenTool, FileText, Settings, Plus } from "lucide-react";
+import { PenTool, FileText, Settings } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -11,7 +11,6 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 

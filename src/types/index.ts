@@ -1,4 +1,5 @@
 import { EStatucArticle } from "@/constant/enum";
+import { User } from "@/generated/prisma";
 
 export interface Post {
   id: string;
@@ -9,7 +10,7 @@ export interface Post {
   createdAt: string;
   status: EStatucArticle;
   tags: string[];
-  author: any;
+  author: User;
   coverImage: string;
 }
 
