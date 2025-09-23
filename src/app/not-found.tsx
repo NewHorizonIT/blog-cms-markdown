@@ -36,7 +36,7 @@ export default function NotFound() {
             <ArrowLeft className="h-4 w-4" />
             Quay lại trang trước
           </Button>
-          <Link href="/blog">
+          <Link href="/">
             <Button className="gap-2">
               <Home className="h-4 w-4" />
               Về trang chủ

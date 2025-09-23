@@ -53,17 +53,6 @@ export function SidebarAdmin() {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <Link href={"/admin/posts/new"}>
-              <Button className="w-full justify-start gap-2 cursor-pointer">
-                <Plus className="size-4" />
-                Bài viết mới
-              </Button>
-            </Link>
-          </SidebarMenuItem>
-        </SidebarMenu>
-
         <SidebarMenu className="mt-4">
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.id}>

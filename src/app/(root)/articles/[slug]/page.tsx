@@ -28,7 +28,7 @@ export default function BlogPostPage({
           <article className="lg:col-span-3">
             {/* Back Button */}
             <div className="mb-6">
-              <Link href="/blog">
+              <Link href="/">
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Quay lại blog

@@ -1,39 +1,17 @@
 "use client";
 import { PostList } from "@/components/shared/post/PostList";
 import SearchBox from "@/components/shared/SearchBox";
+import { Button } from "@/components/ui/button";
 import { EStatucArticle, PostFilterStatus } from "@/constant/enum";
+import { usePosts } from "@/hooks/usePost";
 import { Post } from "@/types";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const AdminPostPage = () => {
-  const [posts, setPosts] = useState<Post[]>([
-    {
-      id: "1",
-      title: "Getting Started with Next.js 15",
-      slug: "getting-started-nextjs-15",
-      content:
-        "# Getting Started with Next.js 15\n\nNext.js 15 brings exciting new features...",
-      excerpt: "Learn about the latest features in Next.js 15",
-      publishedAt: "2024-01-15",
-      status: EStatucArticle.PUBLISHED,
-      coverImage: "",
-      tags: ["nextjs", "react", "web-development"],
-      author: "Admin",
-    },
-    {
-      id: "2",
-      title: "Building a Blog with Markdown",
-      slug: "building-blog-markdown",
-      content:
-        "# Building a Blog with Markdown\n\nMarkdown is a lightweight markup language...",
-      excerpt: "How to create a blog using markdown files",
-      publishedAt: "2024-01-10",
-      status: EStatucArticle.PUBLISHED,
-      coverImage: "",
-      tags: ["markdown", "blog", "cms"],
-      author: "Admin",
-    },
-  ]);
+  const { posts, isLoading, isError } = usePosts();
+  const data = posts?.data.data;
 
   return (
     <div className="">
@@ -45,8 +23,13 @@ const AdminPostPage = () => {
           </p>
         </div>
       </div>
-      <SearchBox options={PostFilterStatus} />
-      <PostList posts={posts} />
+      {/* <SearchBox options={PostFilterStatus} /> */}
+      <PostList posts={data} />
+      <Link href={"posts/new"}>
+        <Button className="w-[50px] h-[50px] flex justify-center items-center fixed bottom-5 right-5 z-10 cursor-pointer">
+          <Plus color="white" />
+        </Button>
+      </Link>
     </div>
   );
 };

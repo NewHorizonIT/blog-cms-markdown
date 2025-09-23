@@ -37,12 +37,12 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
             <div className="text-muted-foreground flex justify-between text-sm">
               <div className="flex items-center gap-1">
                 <User className="h-4 w-4" />
-                <span>{post.author}</span>
+                <span>{post.author.name}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
                 <span>
-                  {new Date(post.publishedAt).toLocaleDateString("vi-VN")}
+                  {new Date(post.createdAt).toLocaleDateString("vi-VN")}
                 </span>
               </div>
             </div>

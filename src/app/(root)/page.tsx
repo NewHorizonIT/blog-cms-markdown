@@ -1,35 +1,39 @@
 "use client";
 
 import { BlogPostCard } from "@/components/shared/post/BlogPostCard";
+import BlogPostCardSkeleton from "@/components/shared/post/BlogPostCardSkeleton";
 import SearchBox from "@/components/shared/SearchBox";
 import { Button } from "@/components/ui/button";
-import { usePosts } from "@/hooks/usePost";
+import { usePosts, useSearchPost } from "@/hooks/usePost";
 import { Post } from "@/types";
-import { useState } from "react";
+import React, { InputHTMLAttributes, useEffect, useState } from "react";
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [keySearch, setKeySearch] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [postsData, setPostsData] = useState<Post[]>([]);
 
   const { posts, isLoading, isError } = usePosts({ limit: 10, page: 1 });
-  console.log(posts?.data.data);
+  useEffect(() => {
+    if (posts?.data.data) {
+      setPostsData(posts?.data.data);
+    }
+  }, [posts]);
+
+  const { posts: postSearch, isError: errorSearch } = useSearchPost(keySearch);
+  const handleSearch = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      setKeySearch(keySearch);
+    }
+  };
 
   // Get all unique tags
-  // const allTags = Array.from(
-  //   new Set(posts?.data.flatMap((post: Post) => post.tags))
-  // );
+  const allTags: string[] = Array.from(
+    new Set(postsData.flatMap((post: Post) => post.tags))
+  );
 
-  // Filter posts based on search and tag
-  // const filteredPosts = blogPosts.filter((post) => {
-  //   const matchesSearch =
-  //     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-  //   const matchesTag = !selectedTag || post.tags.includes(selectedTag);
-  //   return matchesSearch && matchesTag;
-  // });
-
-  if (isLoading) return <p>Đang tải...</p>;
   if (isError) return <p>Lỗi khi tải dữ liệu.</p>;
+
   return (
     <div className="container">
       <main className="container mx-auto px-4 py-8">
@@ -49,7 +53,13 @@ export default function Home() {
             {/* Search and Filters */}
             <div className="space-y-4">
               <div className="relative">
-                <SearchBox />
+                <SearchBox
+                  onSearch={handleSearch}
+                  valueInput={keySearch}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setKeySearch(e.target.value)
+                  }
+                />
               </div>
 
               {/* Tag Filter */}
@@ -61,7 +71,7 @@ export default function Home() {
                 >
                   Tất cả
                 </Button>
-                {/* {allTags.map((tag) => (
+                {allTags.map((tag) => (
                   <Button
                     key={tag}
                     variant={selectedTag === tag ? "default" : "outline"}
@@ -70,22 +80,24 @@ export default function Home() {
                   >
                     {tag}
                   </Button>
-                ))} */}
+                ))}
               </div>
             </div>
+            {postsData.length === 0 ? (
+              <h1>không có bài viết nào</h1>
+            ) : (
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {isLoading
+                  ? Array.from({ length: 10 }).map((_, idx) => (
+                      <BlogPostCardSkeleton key={idx} />
+                    ))
+                  : postsData.map((post: Post) => (
+                      <BlogPostCard key={post.id} post={post} />
+                    ))}
+              </div>
+            )}
 
             {/* Blog Posts Grid */}
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {posts?.data.data.map((post: Post) => (
-                <BlogPostCard key={post.id} post={post} />
-              ))}
-            </div>
-
-            {/* {filteredPosts.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">Không tìm thấy bài viết nào.</p>
-              </div>
-            )} */}
           </div>
         </div>
       </main>

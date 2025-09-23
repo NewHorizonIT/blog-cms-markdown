@@ -14,6 +14,7 @@ import { Post } from "@/types";
 import { Calendar, Edit, Eye, Tag, Trash2 } from "lucide-react";
 
 export function PostList({ posts }: { posts: Post[] }) {
+  if (!posts || posts.length === 0) return <h1>Không có bài viết</h1>;
   return (
     <div className="space-y-6">
       <div className="grid gap-4">
@@ -45,7 +46,7 @@ export function PostList({ posts }: { posts: Post[] }) {
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
-                    {new Date(post.publishedAt).toLocaleDateString("vi-VN")}
+                    {new Date(post.createdAt).toLocaleDateString("vi-VN")}
                   </div>
                   <div className="flex items-center gap-1">
                     <Tag className="h-4 w-4" />

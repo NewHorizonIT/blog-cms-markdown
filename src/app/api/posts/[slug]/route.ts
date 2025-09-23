@@ -10,7 +10,7 @@ export async function GET(
   context: { params: { slug: string } }
 ) {
   try {
-    const { slug } = context.params;
+    const { slug } = await context.params;
     const post = await prisma.post.findUnique({
       where: { slug: slug },
       include: {

@@ -85,8 +85,11 @@ export function Header() {
                   <DropdownMenuContent className="w-56" align="start">
                     <DropdownMenuLabel>Tài khoản của bạn</DropdownMenuLabel>
                     <DropdownMenuGroup>
-                      <DropdownMenuItem>Thông tin tài khoản</DropdownMenuItem>
-                      <DropdownMenuItem>Bài viết của bạn</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href={"/account/profile"}>
+                          Thông tin tài khoản
+                        </Link>
+                      </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => signOut()}>

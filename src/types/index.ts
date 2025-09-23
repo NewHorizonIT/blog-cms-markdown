@@ -6,10 +6,10 @@ export interface Post {
   slug: string;
   content: string;
   excerpt: string;
-  publishedAt: string;
+  createdAt: string;
   status: EStatucArticle;
   tags: string[];
-  author: string;
+  author: any;
   coverImage: string;
 }
 

@@ -39,7 +39,7 @@ const CardPost = ({ post }: { post: Post }) => {
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              {new Date(post.publishedAt).toLocaleDateString("vi-VN")}
+              {new Date(post.createdAt).toLocaleDateString("vi-VN")}
             </div>
             <div className="flex items-center gap-1">
               <Tag className="h-4 w-4" />
